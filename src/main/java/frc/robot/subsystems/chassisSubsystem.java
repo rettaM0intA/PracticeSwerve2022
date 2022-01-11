@@ -31,8 +31,8 @@ public class chassisSubsystem extends SubsystemBase {
   
     /*
     *   TODO
-    *   USE GITHUB!!!!!
     *   MAKE TODO LIST
+    *   Add Greathouse's methods and make them work correctly
     */
 
 
