@@ -192,6 +192,11 @@ public class chassisSubsystem extends SubsystemBase {
     SwerveModuleState backLeft = moduleStates[2];
     SwerveModuleState backRight = moduleStates[3];
 
+    // calcAngleQuadrant(frontLeft.angle.getDegrees());
+    // calcAngleQuadrant(frontRight.angle.getDegrees());
+    // calcAngleQuadrant(backLeft.angle.getDegrees());
+    // calcAngleQuadrant(backRight.angle.getDegrees());
+
     SwerveModuleState frontLeftOptimize = SwerveModuleState.optimize(frontLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
     SwerveModuleState frontRightOptimize = SwerveModuleState.optimize(frontRight, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
     SwerveModuleState backLeftOptimize = SwerveModuleState.optimize(backLeft, new Rotation2d((fLrotationMotor.getEncoder().getPosition() * Constants.kChassisSwerveOutputDegreeToNeoRotation) * 0.0174533));
@@ -492,7 +497,7 @@ public class chassisSubsystem extends SubsystemBase {
     fLDriveMotor.set(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition));
     fRDriveMotor.set(-fRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -fRgoalPosition));
     bLDriveMotor.set(bLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), bLgoalPosition));
-    bRDriveMotor.set(-bRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -bRgoalPosition));
+    bRDriveMotor.set(-bRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -bRgoalPosition)); 
 
     // lastSpeedfL = frontLeftSpeed;
     // lastSpeedfR = frontRightSpeed;
@@ -502,6 +507,26 @@ public class chassisSubsystem extends SubsystemBase {
 
 
   }
+
+  private int calcQuad(double _desiredAngle) {
+    int desiredQuad = 1;
+    if (_desiredAngle >= 0 && _desiredAngle < 90) { desiredQuad = 1; } else 
+    if (_desiredAngle >= 90 && _desiredAngle < 180) { desiredQuad = 2; } else 
+    if (_desiredAngle < 0 && _desiredAngle > -90) { desiredQuad = -1; } else 
+    if (_desiredAngle < -90 && _desiredAngle > -180) { desiredQuad = -2; }
+    return desiredQuad;
+}
+
+// private int calcAngleQuadrant(double _desiredAngle, int _previousDesiredQuad) {
+    // int desiredQuad = calcQuad(_desiredAngle);
+    // int desiredQuadDirectionIndex = Math.abs(desiredQuad - 1);
+    // int previousDesiredQuadDirectionIndex = Math.abs(_previousDesiredQuad - 1);
+    // int desiredQuadDirection = m_desiredQuadDirIndexArray[desiredQuadDirectionIndex][previousDesiredQuadDirectionIndex];
+    // int virtualQuadIndex = m_virtualQuad < 0 ? Math.abs(m_virtualQuad - 3) : Math.abs(m_virtualQuad - 1);
+    // m_virtualQuad = m_virtualQuadArray[desiredQuadDirection][virtualQuadIndex];
+    // m_previousDesiredQuad = desiredQuad;
+    // return m_virtualQuad;
+// }
 
   /**
    * A function made to avoid going to 0 or 360 degrees in rotation.
