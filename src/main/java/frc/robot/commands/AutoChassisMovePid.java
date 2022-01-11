@@ -84,7 +84,7 @@ public class AutoChassisMovePid extends CommandBase {
     if(isFinished){
       RobotContainer.m_chassisSubsystem.resetGyro();
       RobotContainer.m_chassisSubsystem.zeroMotors();
-      RobotContainer.m_chassisSubsystem.disablePids();
+      //RobotContainer.m_chassisSubsystem.disablePids();
 
       return true;
     }

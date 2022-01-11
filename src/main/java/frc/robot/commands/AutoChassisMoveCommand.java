@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.Timer;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -138,3 +140,25 @@ public class AutoChassisMoveCommand extends CommandBase {
     return false;
   }
 }
+
+
+// 
+// public class TimeTurtle {
+  // public TimeTurtle(){
+      // 
+    // double stop = 9999999;
+    // double timeTurtle = 0;
+    // if(timeTurtle == stop)
+      // death();
+// 
+  // }
+// 
+  // private void death(){
+      // endLife();
+  // }
+// 
+  // private void endLife(){
+      // 
+  // }
+// }
+// 
