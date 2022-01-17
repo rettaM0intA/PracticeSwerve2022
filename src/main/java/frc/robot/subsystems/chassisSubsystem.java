@@ -87,10 +87,10 @@ public class chassisSubsystem extends SubsystemBase {
   double lastSpeedbL = 0;
   double lastSpeedbR = 0;
 
-  PIDController fLPidController = new PIDController(0.00013, 0.000028, 0);
-  PIDController fRPidController = new PIDController(0.00013, 0.000028, 0);
-  PIDController bLPidController = new PIDController(0.00013, 0.000028, 0);
-  PIDController bRPidController = new PIDController(0.00013, 0.000028, 0);
+  PIDController fLPidController = new PIDController(0.000078, 0.000143, 0);
+  PIDController fRPidController = new PIDController(0.000078, 0.000143, 0);
+  PIDController bLPidController = new PIDController(0.000078, 0.000143, 0);
+  PIDController bRPidController = new PIDController(0.000078, 0.000143, 0);
   
   int currentRotationFl = 1;
   int currentRotationFr = 1;
@@ -493,19 +493,32 @@ public class chassisSubsystem extends SubsystemBase {
     // fRDriveMotor.set(-frontRightLimiter.calculate(frontRightSpeed));
     // bLDriveMotor.set(backLeftLimiter.calculate(backLeftSpeed));
     // bRDriveMotor.set(-backRightLimiter.calculate(backRightSpeed));
+    
+    
 
-    fLDriveMotor.set(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition));
-    fRDriveMotor.set(-fRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -fRgoalPosition));
-    bLDriveMotor.set(bLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), bLgoalPosition));
-    bRDriveMotor.set(-bRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -bRgoalPosition)); 
+    fLDriveMotor.set(toPointSpeedLimit(fLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), fLgoalPosition)));
+    fRDriveMotor.set(toPointSpeedLimit(-fRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -fRgoalPosition)));
+    bLDriveMotor.set(toPointSpeedLimit(bLPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), bLgoalPosition)));
+    bRDriveMotor.set(toPointSpeedLimit(-bRPidController.calculate(fLDriveMotor.getSelectedSensorPosition(), -bRgoalPosition))); 
 
     // lastSpeedfL = frontLeftSpeed;
     // lastSpeedfR = frontRightSpeed;
     // lastSpeedbL = backLeftSpeed;
     // lastSpeedbR = backRightSpeed;
 
+  }
 
+  private double toPointSpeedLimit(double attemptSpeed){
+    
+    if(Math.abs(attemptSpeed) > 0.7){
+      if(attemptSpeed > 0){
+        return 0.7;
+      }else{
+        return -0.7;
+      }
+    }
 
+    return attemptSpeed;
   }
 
   private int calcQuad(double _desiredAngle) {

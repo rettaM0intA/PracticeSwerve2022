@@ -15,13 +15,14 @@ import frc.robot.commands.ResetGyroCommand;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Auton_1 extends SequentialCommandGroup {
   /** Creates a new Auton_1. */
-  public Auton_1() {   // Add your commands in the addCommands() call, e.g.
+  public Auton_1() {   
+    // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ResetGyroCommand());
     //addCommands(new AutoChassisMoveCommand(0, 50, -190));
-    addCommands(new AutoChassisMovePid(0, 20, 35, 35, 35, 35));
+    addCommands(new AutoChassisMovePid(0, 550, 35, 35, 35, 35));
     addCommands(new ResetGyroCommand());
-    addCommands(new AutoChassisMovePid(0, 20, 35, 35, 35, 35));
+    addCommands(new AutoChassisMovePid(0, -100, -35, -35, -35, -35));
     addCommands(new ResetGyroCommand());
     // addCommands(new AutoChassisSpinCommand(180, 50));
   }
